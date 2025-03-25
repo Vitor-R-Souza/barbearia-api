@@ -84,7 +84,7 @@ A seguir está a lista de Endpoints que a API possui e uma breve descrição de 
 | `endAt`      | `Date` | **Obrigatório**. A data que a consulta termina (dia e horario) |
 | `client`      | `client` | **Obrigatório**. Os dados do cliente |
 
-#### exclui um cliente
+#### exclui um agendamento
 
 ```http
   DELETE /schedules/${id}
