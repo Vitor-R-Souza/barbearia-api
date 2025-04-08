@@ -5,6 +5,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.OffsetDateTime;
 
+/* Este código define um record chamado SaveScheduleRequest, que é usado para representar os dados de requisição para salvar
+ um novo agendamento na API. Ele utiliza anotações do Jackson para mapear os nomes das propriedades JSON e anotações do
+ Jakarta Validation para validar os dados recebidos. */
+
 public record SaveScheduleRequest(
         @NotNull
         @JsonProperty("startAt")

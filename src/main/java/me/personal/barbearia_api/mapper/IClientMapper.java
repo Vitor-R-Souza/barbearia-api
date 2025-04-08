@@ -14,21 +14,25 @@ import java.util.List;
 
 import static org.mapstruct.ap.internal.gem.MappingConstantsGem.ComponentModelGem.SPRING;
 
+/* Este código define uma interface IClientMapper que usa a biblioteca MapStruct para gerar automaticamente implementações
+de métodos de mapeamento entre objetos de diferentes tipos. Isso simplifica a conversão de objetos entre as camadas de
+controle e entidade, reduzindo a necessidade de escrever código de mapeamento manual. */
+
 @Mapper(componentModel = SPRING )
 public interface IClientMapper {
 
-    @Mapping(target = "id", ignore = true)
-    @Mapping(target = "schedules", ignore = true)
-    ClientEntity toEntity(final SaveClientRequest request);
+    @Mapping(target = "id", ignore = true) // ignorar o ID
+    @Mapping(target = "schedules", ignore = true) // ignorar o schedules
+    ClientEntity toEntity(final SaveClientRequest request); // SaveClientRequest -> ClientEntity
 
-    SaveClientResponse toSaveResponse(ClientEntity entity);
+    SaveClientResponse toSaveResponse(ClientEntity entity); // ClientEntity -> SaveClientResponse
 
-    @Mapping(target = "schedules", ignore = true)
-    ClientEntity toEntity(final long id, UpdateClientRequest request);
+    @Mapping(target = "schedules", ignore = true) // ignora o schedules
+    ClientEntity toEntity(final long id, UpdateClientRequest request); // UpdateClientRequest -> ClientEntity usando o ID
 
-    UpdateClientResponse toUpdateResponse(final ClientEntity entity);
+    UpdateClientResponse toUpdateResponse(final ClientEntity entity); // ClientEntity -> UpdateClientResponse
 
-    ClientDetailResponse toDetailResponse(final ClientEntity entity);
+    ClientDetailResponse toDetailResponse(final ClientEntity entity); // ClientEntity -> ClientDetailResponse
 
-    List<ListClientResponse> toListResponse(final List<ClientEntity> entities);
+    List<ListClientResponse> toListResponse(final List<ClientEntity> entities); // List<ClientEntity> -> List<ClientEntity>
 }

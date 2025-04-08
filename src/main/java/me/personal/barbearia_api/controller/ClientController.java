@@ -18,9 +18,13 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+/* Este código define um controlador REST (ClientController) que lida com requisições relacionadas a clientes. Ele utiliza
+anotações do Spring Web para mapear as requisições HTTP para os métodos correspondentes. Ele também utiliza Lombok para
+gerar automaticamente o construtor com todos os argumentos. */
+
 @RestController
-@RequestMapping("client")
-@AllArgsConstructor
+@RequestMapping("client") // caminho base
+@AllArgsConstructor // anotação para gerar o construtor com todos os argumentos
 public class ClientController {
 
     private final IClientService service;
@@ -28,14 +32,14 @@ public class ClientController {
     private final IClientMapper mapper;
 
     @PostMapping
-    @ResponseStatus(CREATED)
+    @ResponseStatus(CREATED) // salva
     SaveClientResponse save(@RequestBody @Valid final SaveClientRequest request) {
         var entity = mapper.toEntity(request);
         service.save(entity);
         return mapper.toSaveResponse(entity);
     }
 
-    @PutMapping("{id}")
+    @PutMapping("{id}") // atualiza
     UpdateClientResponse update(
             @PathVariable final long id,
             @RequestBody @Valid final UpdateClientRequest request)
@@ -46,19 +50,19 @@ public class ClientController {
     }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
+    @ResponseStatus(NO_CONTENT) // deleta
     void delete(@PathVariable final long id){
         service.delete(id);
     }
 
 
-    @GetMapping("{id}")
+    @GetMapping("{id}") // busca por id
     ClientDetailResponse findById(@PathVariable final long id){
         var entity = queryService.findByID(id);
         return mapper.toDetailResponse(entity);
     }
 
-    @GetMapping
+    @GetMapping // lista todos
     List<ListClientResponse> list(){
         var entities = queryService.list();
         return mapper.toListResponse(entities);

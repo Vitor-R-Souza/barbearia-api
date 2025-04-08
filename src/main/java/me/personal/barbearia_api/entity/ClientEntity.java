@@ -18,8 +18,12 @@ import java.util.Set;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+/* Este código define uma classe ClientEntity que representa um cliente na aplicação. Ele usa anotações JPA para mapear
+ a classe para a tabela "CLIENTS" no banco de dados e definir as colunas da tabela. Ele também usa Lombok para gerar
+ automaticamente métodos getter, setter e toString. */
+
 @Entity
-@Table(
+@Table( // definições da tabela e restrições
         name = "CLIENTS",
         uniqueConstraints = {
                 @UniqueConstraint(name = "UK_EMAIL", columnNames = "email"),
@@ -28,7 +32,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 )
 @Getter
 @Setter
-@ToString
+@ToString // anotações lmbok para criar getters, setters e toString
 public class ClientEntity {
 
     @Id
@@ -44,8 +48,8 @@ public class ClientEntity {
     @Column(nullable = false, length = 11)
     private String phone;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "client", cascade = ALL, orphanRemoval = true)
+    @ToString.Exclude // exlui essa coleção do toString
+    @OneToMany(mappedBy = "client", cascade = ALL, orphanRemoval = true) // relação 1 para N com scheduleEntity
     private Set<ScheduleEntity> schedules = new HashSet<>();
 
     @Override

@@ -16,9 +16,13 @@ import static java.time.ZoneOffset.UTC;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
 
+/* Este código define um controlador REST (ScheduleController) que lida com requisições relacionadas a agendamentos. Ele
+utiliza anotações do Spring Web para mapear as requisições HTTP para os métodos correspondentes. Ele também utiliza Lombok
+para gerar automaticamente o construtor com todos os argumentos. */
+
 @RestController
-@RequestMapping("schedules")
-@AllArgsConstructor
+@RequestMapping("schedules") // caminho base
+@AllArgsConstructor // anotação para gerar o construtor com todos os argumentos
 public class ScheduleController {
 
     private final IScheduleService service;
@@ -26,7 +30,7 @@ public class ScheduleController {
     private final IScheduleMapper mapper;
 
     @PostMapping
-    @ResponseStatus(CREATED)
+    @ResponseStatus(CREATED) // salva
     SaveScheduleResponse save(@RequestBody @Valid final SaveScheduleRequest request){
         var entity = mapper.toEntity(request);
         service.save(entity);
@@ -34,12 +38,12 @@ public class ScheduleController {
     }
 
     @DeleteMapping("{id}")
-    @ResponseStatus(NO_CONTENT)
+    @ResponseStatus(NO_CONTENT) // deleta
     void delete(@PathVariable final long id){
         service.delete(id);
     }
 
-    @GetMapping("{year}/{month}")
+    @GetMapping("{year}/{month}") // lista pelo mês
     ScheduleAppointmentMonthResponse listMonth(@PathVariable final int year, @PathVariable final int month){
         var yearMonth = YearMonth.of(year, month);
         var startAt = yearMonth.atDay(1)

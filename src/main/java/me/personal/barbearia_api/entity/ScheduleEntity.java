@@ -17,8 +17,12 @@ import java.util.Objects;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+/* Este código define uma classe ScheduleEntity que representa um agendamento na aplicação. Ele usa anotações JPA para
+ mapear a classe para a tabela "SCHEDULES" no banco de dados e definir as colunas da tabela. Ele também usa Lombok para
+ gerar automaticamente métodos getter, setter e toString. */
+
 @Entity
-@Table(
+@Table( // definições da tabela e restrições
         name = "SCHEDULES",
         uniqueConstraints = {
                 @UniqueConstraint(name = "UK_SCHEDULE_INTERVAL", columnNames = {"start_at", "end_at"}),
@@ -26,7 +30,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 )
 @Getter
 @Setter
-@ToString
+@ToString // anotações lmbok para criar getters, setters e toString
 public class ScheduleEntity {
 
     @Id
@@ -39,9 +43,9 @@ public class ScheduleEntity {
     @Column(nullable = false, name = "end_at")
     private OffsetDateTime endAt;
 
-    @ToString.Exclude
+    @ToString.Exclude // exlui essa coleção do toString
     @ManyToOne
-    @JoinColumn(name = "client_id")
+    @JoinColumn(name = "client_id") // relação N para 1 com clientEntity
     private ClientEntity client = new ClientEntity();
 
     @Override

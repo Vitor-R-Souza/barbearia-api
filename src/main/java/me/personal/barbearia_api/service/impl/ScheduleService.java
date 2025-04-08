@@ -7,22 +7,27 @@ import me.personal.barbearia_api.service.IScheduleService;
 import me.personal.barbearia_api.service.query.IScheduleQueryService;
 import org.springframework.stereotype.Service;
 
+/* Este código define uma classe ScheduleService que implementa a interface IScheduleService. Ela utiliza o repositório
+IScheduleRepository para interagir com o banco de dados e o serviço de consulta IScheduleQueryService para realizar
+verificações antes de salvar agendamentos. A classe lida com as operações de salvar e deletar agendamentos, garantindo a
+integridade dos dados. */
+
 @Service
-@AllArgsConstructor
+@AllArgsConstructor // anotação para gerar o construtor com todos os argumentos
 public class ScheduleService implements IScheduleService {
 
     private final IScheduleRepository repository;
     private final IScheduleQueryService queryService;
 
-    @Override
+    @Override // salva
     public ScheduleEntity save(ScheduleEntity entity) {
-        queryService.verifyIfScheduleExists(entity.getStartAt(), entity.getEndAt());
-        return repository.save(entity);
+        queryService.verifyIfScheduleExists(entity.getStartAt(), entity.getEndAt()); // verifica se já existe
+        return repository.save(entity); // salva e retorna  resultado
     }
 
-    @Override
+    @Override // deleta
     public void delete(long id) {
-        queryService.findById(id);
-        repository.deleteById(id);
+        queryService.findById(id); // verifica se existe
+        repository.deleteById(id); // deleta
     }
 }
